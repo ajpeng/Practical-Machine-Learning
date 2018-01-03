@@ -29,13 +29,14 @@ df.fillna(-99999, inplace=True)
 #predict forecast for the next 1% into the future
 forecast_out= int(math.ceil(0.01*len(df)))
 #print(forecast_out)
-
-df['label'] = df[forecast_col].shift(-forecast_out)
+df['label'] = df[forecast_col].shift(periods=forecast_out)
+#df['label'] = df[forecast_col].shift(-forecast_out)
 #df.dropna(inplace=True)
 
 #print(df.head())
 #features are x , labels are y
 X = np.array(df.drop(['label'],1))
+#X = np.array(df[['Adj. Volume','HL_PCT','PCT_change']])
 X = preprocessing.scale(X)
 X_lately = X[-forecast_out:]
 X = X[:-forecast_out]
